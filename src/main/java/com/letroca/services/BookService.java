@@ -4,6 +4,10 @@ import com.letroca.dtos.books.BookDTO;
 import com.letroca.entities.books.Book;
 import com.letroca.entities.users.User;
 import com.letroca.infra.custom.CustomUserDetails;
+import com.letroca.infra.exceptions.BookAlreadyExistsException;
+import com.letroca.infra.exceptions.BookNotFoundException;
+import com.letroca.infra.exceptions.UnauthorizedException;
+import com.letroca.infra.exceptions.UserNotFoundException;
 import com.letroca.repositories.BookRepository;
 import com.letroca.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,30 +35,29 @@ public class BookService {
      * @throws RuntimeException If the book with the provided ID is not found in the database.
      */
     public BookDTO getBook(String id) {
-        Book book = bookRepository.findById(id).orElseThrow(() -> new RuntimeException("Book not found."));
+        Book book = bookRepository.findById(id).orElseThrow(BookNotFoundException::new);
         return new BookDTO( book.getTitle(), book.getIsbn(), book.getGenre(), book.getPublication_year(), book.getPublisher(), book.getSynopsis(), book.getLanguage() );
     }
 
     /**
      * Creates a new book with the provided data.
-     *
+     * <p>
      * This method creates a new book using the information provided in the BookDTO object.
      * It associates the book with the authenticated user who is creating it.
      *
      * @param data The data representing the book to be created.
-     * @return The created Book object.
      * @throws RuntimeException If the authenticated user is not found, or if a book with the same ISBN
-     *         already exists for the user.
+     *                          already exists for the user.
      */
-    public Book createBook(BookDTO data) {
+    public void createBook(BookDTO data) {
         CustomUserDetails authentication = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String userId = authentication.getId();
 
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found!"));
+        User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
 
         Optional<Book> existingBook = bookRepository.findByIsbnAndUserId(data.isbn(), user.getId());
         if (existingBook.isPresent()) {
-            throw new RuntimeException("A book with the same ISBN already exists for this user!");
+            throw new BookAlreadyExistsException();
         }
 
         Book book = new Book();
@@ -67,7 +70,7 @@ public class BookService {
         book.setLanguage(data.language());
         book.setUser(user);
 
-        return bookRepository.save(book);
+        bookRepository.save(book);
     }
 
     /**
@@ -86,11 +89,11 @@ public class BookService {
         CustomUserDetails authentication = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String userId = authentication.getId();
 
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found!"));
-        Book bookToUpdate = bookRepository.findById(id).orElseThrow(() -> new RuntimeException("Book not found!"));
+        User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+        Book bookToUpdate = bookRepository.findById(id).orElseThrow(BookNotFoundException::new);
 
         if (!bookToUpdate.getUser().getId().equals(userId)) {
-            throw new RuntimeException("You are not authorized to update this book!");
+            throw new UnauthorizedException();
         }
 
         bookToUpdate.setTitle(data.title());
@@ -118,10 +121,10 @@ public class BookService {
         CustomUserDetails authentication = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String userId = authentication.getId();
 
-        Book bookToDelete = bookRepository.findById(id).orElseThrow(() -> new RuntimeException("Book not found!"));
+        Book bookToDelete = bookRepository.findById(id).orElseThrow(BookNotFoundException::new);
 
         if (!bookToDelete.getUser().getId().equals(userId)) {
-            throw new RuntimeException("You are not authorized to delete this book!");
+            throw new UnauthorizedException();
         }
 
         bookRepository.delete(bookToDelete);

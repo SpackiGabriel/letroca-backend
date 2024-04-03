@@ -5,6 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.letroca.entities.users.User;
+import com.letroca.infra.exceptions.TokenNotGeneratedException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,7 @@ public class TokenService {
                     .sign(algorithm);
 
         } catch (JWTCreationException exception) {
-            throw new RuntimeException("Error while generating token", exception);
+            throw new TokenNotGeneratedException();
         }
     }
 

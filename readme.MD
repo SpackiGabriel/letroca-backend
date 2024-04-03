@@ -1,90 +1,35 @@
-# Spring Boot User Authentication Service
+# LêTroca
 
-This is a simple Spring Boot application that implements a user authentication service using Spring Security and JWT (JSON Web Tokens).
+### 🛑 The project is still under development 🛑
 
-## Getting Started
+## Overview
+LêTroca is a full-stack web application project focused on facilitating book exchanges among users based on their preferences and location. The platform aims to foster a community where users can share their love for reading while promoting sustainability through book reuse.
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+The application will provide users with the ability to create customized filters to refine their search for desired books, making it easier to find books that match their interests. By encouraging book exchanges, LêTroca aims to reduce the environmental impact associated with book production and distribution, contributing to a more sustainable future.
 
-### Prerequisites
-
-- Java Development Kit (JDK) 21
-- Maven
-
-### Installing
+## Cloning and Usage
+To clone and use this project, follow these steps:
 
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/spring-boot-user-authentication.git
+git clone <repository-url>
 ```
 
-2. Navigate into the project directory:
+2. Navigate to the project directory:
 
 ```bash
-cd spring-boot-user-authentication
+cd <repository-name>
 ```
 
-3. Build the project using Maven:
+3. Install dependencies:
 
 ```bash
-mvn clean install
+mvn install
 ```
 
-### Running the Application
-
-You can run the application using Maven:
+4. Run the application:
 
 ```bash
 mvn spring-boot:run
 ```
-
-The application will start at `http://localhost:8080`.
-
-## Usage
-
-Once the application is running, you can interact with it using any HTTP client such as cURL or Postman. Below are some example requests:
-
-### Register a User
-
-Send a POST request to `/auth/register` with a JSON body containing the user details:
-
-```json
-{
-    "name": "Example User",
-    "email": "exampleuser@example.com",
-    "password": "examplepassword",
-    "role": "USER"
-}
-```
-
-### Authenticate User
-
-Send a POST request to `/auth/login` with the user credentials:
-
-```json
-{
-    "email": "exampleuser@example.com",
-    "password": "examplepassword"
-}
-```
-
-If the credentials are correct, you will receive a JWT token in the response.
-
-### Access Protected Resource
-
-To access a protected resource, include the JWT token in the `Authorization` header of your requests:
-
-```makefile
-Authorization: Bearer <JWT token>
-```
-### Built With
-
-- Spring Boot - Framework for creating Spring applications
-- Spring Web - Build web, including RESTful, applications using Spring MVC
-- Spring Data JPA - Simplifies data access for relational databases
-- Spring Security - Authentication and access control framework
-- PostgreSQL - Open source object-relational database system
-- Project Lombok - Java library that helps to reduce boilerplate code
-- Auth0 Java JWT - Library for working with JSON Web Tokens (JWT) in Java
-- Flyway - Database migration tool for java

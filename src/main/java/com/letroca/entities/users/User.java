@@ -1,5 +1,7 @@
 package com.letroca.entities.users;
 
+import com.letroca.entities.books.Book;
+import com.letroca.infra.custom.CustomUserDetails;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,19 +9,18 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table(name="users")
+@Table(name = "users")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class User implements UserDetails {
+public class User extends CustomUserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -36,6 +37,9 @@ public class User implements UserDetails {
 
     @Column(nullable = false)
     private UserRole role;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Book> books;
 
     public User(String name, String email, String password, UserRole role) {
         this.name = name;
@@ -56,7 +60,12 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return this.email;
+    }
+
+    @Override
+    public String getId() {
+        return this.id;
     }
 
     @Override

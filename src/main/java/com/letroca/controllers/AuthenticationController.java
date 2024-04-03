@@ -1,8 +1,8 @@
 package com.letroca.controllers;
 
-import com.letroca.entities.users.dtos.AuthenticationDTO;
-import com.letroca.entities.users.dtos.LoginResponseDTO;
-import com.letroca.entities.users.dtos.RegisterDTO;
+import com.letroca.dtos.users.UserAuthenticationDTO;
+import com.letroca.dtos.users.UserLoginResponseDTO;
+import com.letroca.dtos.users.UserRegisterDTO;
 import com.letroca.entities.users.User;
 import com.letroca.infra.security.TokenService;
 import com.letroca.repositories.UserRepository;
@@ -35,13 +35,13 @@ public class AuthenticationController {
      * @return ResponseEntity containing authentication token
      */
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity login(@RequestBody AuthenticationDTO data) {
+    public ResponseEntity login(@RequestBody UserAuthenticationDTO data) {
         var credentials = new UsernamePasswordAuthenticationToken(data.email(), data.password());
         var auth = this.authenticationManager.authenticate(credentials);
 
         var token = tokenService.generateToken((User) auth.getPrincipal());
 
-        return ResponseEntity.ok(new LoginResponseDTO(token));
+        return ResponseEntity.ok(new UserLoginResponseDTO(token));
     }
 
     /**
@@ -51,7 +51,7 @@ public class AuthenticationController {
      * @return ResponseEntity indicating success or failure of registration
      */
     @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity register(@RequestBody RegisterDTO data) {
+    public ResponseEntity register(@RequestBody UserRegisterDTO data) {
         if (this.userRepository.findByEmail(data.email()) != null) return ResponseEntity.badRequest().build();
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());

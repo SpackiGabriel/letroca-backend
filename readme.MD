@@ -2,8 +2,6 @@
 
 ### 🟥 This project is currently under development 🟥
 
-Welcome to Letroca Backend!
-
 ## Installation
 
 1. **Clone the repository:**

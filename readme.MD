@@ -1,13 +1,15 @@
 # Letroca Backend
 
-Welcome to Letroca Backend! This project is currently under development.
+### 🟥 This project is currently under development 🟥
+
+Welcome to Letroca Backend!
 
 ## Installation
 
 1. **Clone the repository:**
 
     ```
-    git clone https://github.com/your-username/letroca-backend.git
+    git clone https://github.com/SpackiGabriel/letroca-backend
     ```
 
 2. **Navigate to the project directory:**

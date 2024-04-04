@@ -1,35 +1,44 @@
-# LêTroca
+# Letroca Backend
 
-### 🛑 The project is still under development 🛑
+Welcome to Letroca Backend! This project is currently under development.
 
-## Overview
-LêTroca is a full-stack web application project focused on facilitating book exchanges among users based on their preferences and location. The platform aims to foster a community where users can share their love for reading while promoting sustainability through book reuse.
+## Installation
 
-The application will provide users with the ability to create customized filters to refine their search for desired books, making it easier to find books that match their interests. By encouraging book exchanges, LêTroca aims to reduce the environmental impact associated with book production and distribution, contributing to a more sustainable future.
+1. **Clone the repository:**
 
-## Cloning and Usage
-To clone and use this project, follow these steps:
+    ```
+    git clone https://github.com/your-username/letroca-backend.git
+    ```
 
-1. Clone the repository:
+2. **Navigate to the project directory:**
 
-```bash
-git clone <repository-url>
-```
+    ```
+    cd letroca-backend
+    ```
 
-2. Navigate to the project directory:
+3. **Build the project:**
 
-```bash
-cd <repository-name>
-```
+    ```
+    mvn clean install
+    ```
 
-3. Install dependencies:
+4. **Run the application:**
 
-```bash
-mvn install
-```
+    ```
+    mvn spring-boot:run
+    ```
+## Usage
 
-4. Run the application:
+Once the application is running, you can interact with the backend using the provided [endpoints](./endpoints.MD).
 
-```bash
-mvn spring-boot:run
-```
+### Authentication
+
+Authentication is implemented using Spring Security with JSON Web Tokens (JWT). Users can register and log in to the platform to access their accounts.
+
+### Book Management
+
+The backend provides endpoints for basic CRUD operations on books. Users can manage their books through these endpoints.
+
+### Exception Handling
+
+Custom exception handling is implemented for better error management. Custom exceptions are thrown for common scenarios such as book already existing, unauthorized access, etc.

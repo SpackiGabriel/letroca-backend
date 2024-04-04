@@ -1,8 +1,5 @@
 package com.letroca.entities.books;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import com.google.gson.JsonObject;
 import com.letroca.entities.users.User;
 import jakarta.persistence.*;
 import lombok.*;

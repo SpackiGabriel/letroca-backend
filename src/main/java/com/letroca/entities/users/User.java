@@ -19,7 +19,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode(of = "id", callSuper = true)
 public class User extends CustomUserDetails {
 
     @Id
@@ -38,7 +38,7 @@ public class User extends CustomUserDetails {
     @Column(nullable = false)
     private UserRole role;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
     private List<Book> books;
 
     public User(String name, String email, String password, UserRole role) {

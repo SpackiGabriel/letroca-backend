@@ -12,7 +12,4 @@ import java.util.Optional;
 @Repository
 public interface BookRepository extends JpaRepository<Book, String> {
     Optional<Book> findByIsbnAndUserId(String isbn, String userId);
-
-    @Query("SELECT b FROM books WHERE b.user_id = :userId AND b.genre = :genre")
-    List<Book> findByUserIdAndGenre(String userId, String genre);
 }

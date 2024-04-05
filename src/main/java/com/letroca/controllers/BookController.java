@@ -2,10 +2,14 @@ package com.letroca.controllers;
 
 import com.letroca.dtos.books.BookDTO;
 import com.letroca.dtos.utils.GenericResponseDTO;
+import com.letroca.entities.books.Book;
+import com.letroca.repositories.BookRepository;
 import com.letroca.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/book", produces = {"application/json"})
@@ -13,6 +17,9 @@ public class BookController {
 
     @Autowired
     BookService bookService;
+
+    @Autowired
+    BookRepository bookRepository;
 
     /**
      * Retrieves the details of a book based on the provided ID.
